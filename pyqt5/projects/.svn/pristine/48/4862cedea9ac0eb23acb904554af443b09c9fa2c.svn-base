@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1216</width>
+    <height>838</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>FastCharger Controller HMI</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="main_frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="1" column="0">
+          <widget class="QFrame" name="dcdc_frame">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>700</width>
+             <height>400</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QGroupBox" name="dcdc_group">
+              <property name="title">
+               <string>DCDC Converters</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <item>
+                <widget class="QTabWidget" name="dcdc_tabs">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>1000</width>
+                   <height>1000</height>
+                  </size>
+                 </property>
+                 <property name="currentIndex">
+                  <number>0</number>
+                 </property>
+                 <widget class="QWidget" name="dcdc1_tab">
+                  <property name="minimumSize">
+                   <size>
+                    <width>10</width>
+                    <height>10</height>
+                   </size>
+                  </property>
+                  <attribute name="title">
+                   <string>DCDC 1</string>
+                  </attribute>
+                  <widget class="QTextEdit" name="textEdit">
+                   <property name="geometry">
+                    <rect>
+                     <x>40</x>
+                     <y>20</y>
+                     <width>361</width>
+                     <height>231</height>
+                    </rect>
+                   </property>
+                  </widget>
+                 </widget>
+                 <widget class="QWidget" name="dcdc2_tab">
+                  <attribute name="title">
+                   <string>DCDC 2</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="dcdc3_tab">
+                  <attribute name="title">
+                   <string>DCDC 3</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="dcdc4_tab">
+                  <attribute name="title">
+                   <string>DCDC 4</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="dcdc5_tab">
+                  <attribute name="title">
+                   <string>DCDC 5</string>
+                  </attribute>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QFrame" name="mrs_frame">
+           <property name="maximumSize">
+            <size>
+             <width>700</width>
+             <height>200</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QGroupBox" name="mrs_group">
+              <property name="maximumSize">
+               <size>
+                <width>700</width>
+                <height>300</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>MRS Modules</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="0" column="0">
+                <widget class="QTabWidget" name="mrs_tabs">
+                 <property name="currentIndex">
+                  <number>0</number>
+                 </property>
+                 <widget class="QWidget" name="mrs1_tab">
+                  <attribute name="title">
+                   <string>MRS 1</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="mrs2_tab">
+                  <attribute name="title">
+                   <string>MRS 2</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="mrs3_tab">
+                  <attribute name="title">
+                   <string>MRS 3</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="mrs4_tab">
+                  <attribute name="title">
+                   <string>MRS 4</string>
+                  </attribute>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QFrame" name="frame_6">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QGroupBox" name="groupBox_6">
+              <property name="title">
+               <string>GroupBox</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QFrame" name="sys_control_frame">
+           <property name="maximumSize">
+            <size>
+             <width>700</width>
+             <height>200</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QGroupBox" name="sys_control_group">
+              <property name="title">
+               <string>System Control</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QFrame" name="frame_5">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QGroupBox" name="groupBox_5">
+              <property name="title">
+               <string>GroupBox</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QFrame" name="crm_frame">
+           <property name="maximumSize">
+            <size>
+             <width>500</width>
+             <height>400</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QGroupBox" name="crm_group">
+              <property name="maximumSize">
+               <size>
+                <width>500</width>
+                <height>500</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>CRM Controllers</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_3">
+               <item row="0" column="0">
+                <widget class="QTabWidget" name="crm_tabs">
+                 <property name="currentIndex">
+                  <number>0</number>
+                 </property>
+                 <widget class="QWidget" name="crm1_tab">
+                  <attribute name="title">
+                   <string>CRM 1</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="crm2_tab">
+                  <attribute name="title">
+                   <string>CRM 2</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="crm3_tab">
+                  <attribute name="title">
+                   <string>CRM 3</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="crm4_tab">
+                  <attribute name="title">
+                   <string>CRM 4</string>
+                  </attribute>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QFrame" name="sys_status_frame">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QGroupBox" name="sys_status_group">
+              <property name="title">
+               <string>System Status</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1216</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <widget class="QMenu" name="menuDCDC_File">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionDCDC_Configuration"/>
+    <addaction name="actionCRM_Configuration"/>
+    <addaction name="actionMRS_Configuration"/>
+   </widget>
+   <addaction name="menuDCDC_File"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDCDC_Configuration">
+   <property name="text">
+    <string>DCDC Configuration</string>
+   </property>
+  </action>
+  <action name="actionCRM_Configuration">
+   <property name="text">
+    <string>CRM Configuration</string>
+   </property>
+  </action>
+  <action name="actionMRS_Configuration">
+   <property name="text">
+    <string>MRS Configuration</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

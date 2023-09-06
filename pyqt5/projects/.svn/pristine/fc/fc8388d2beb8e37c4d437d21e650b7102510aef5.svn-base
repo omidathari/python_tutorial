@@ -1,0 +1,526 @@
+from PyQt5 import QtCore, QtGui, QtWidgets, Qt
+from PyQt5.QtWidgets import QMessageBox, QInputDialog, QLineEdit
+from PyQt5.QtGui import QCloseEvent
+import subprocess
+import cmd_hmi
+import fc_hmi
+import udp_client_class
+import threading
+import time
+import sys
+import json
+import os
+
+
+CONFIG_DIR = r'C:\Work\FastChargeConfig'
+UPDATE_RATE = 0.200
+
+class uiMain( fc_hmi.Ui_MainWindow, QtWidgets.QMainWindow):
+    # For some strange reason this must be outside the __init__ function
+    server_rx_Signal = QtCore.pyqtSignal(str)
+    server_monitor_Signal = QtCore.pyqtSignal(str)
+
+    def __init__(self):
+        super(uiMain,self).__init__()
+        self.setupUi(self)
+        self.cmd_win = cmd_hmi.Ui_CmdWindow()
+        self.w_cmd = QtWidgets.QMainWindow()
+        self.cmd_win.setupUi(self.w_cmd)
+        self.server_ip = "127.0.0.1"
+        self.server_port = 20001
+        self.gui_ip = "127.0.0.1"
+        self.gui_port = 20003
+        self.serverIx = udp_client_class.udpClientObject(self.server_ip, self.server_port, self.gui_ip, self.gui_port, self.__server_receiver)
+        self.app = None
+        self.__connect_signal_slots()
+        self.update_thread = threading.Thread(target = self.__update_thread_processor)
+        self.update_rate = UPDATE_RATE
+        self.monitor_thread = threading.Thread(target = self.__monitor_thread_processor)
+        self.__start_server_connection()
+        self.threads_exit = False
+        self.imc = 0
+        self.pimc = 0
+        # remap controls for easy access
+        # DCDC tabs
+        self.dcdc_tab = []
+        self.op_mode = []
+        self.setpoint = []
+        self.limit_type = []
+        self.clamp_status = []
+        self.con_mode = []
+        self.con_type = []
+        self.cur_limit = []
+        self.errors1 = []
+        self.errors2 = []
+        self.warnings = []
+        self.measures = []
+
+        #CRM Tabs
+        self.crm_tab = []
+        self.crm_batteries = []
+        self.crm_status = []
+        self.hpr_status = []
+        self.or_status = []
+        self.fan_status = []
+        self.hpr_health = []
+        self.or_health = []
+        self.cf_health = []
+        self.df_health = []
+        self.pb_reset = []
+        self.battery_tab = []
+       
+        #MRS Tabs
+        self.mrs_tab = []
+        self.mrs_analogs = []
+        self.mrs_relays = []
+
+        self.remap()
+        self.update_thread.start()
+        self.monitor_thread.start()
+        self.show()
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        print("Close Event")
+        print("exit")
+        self.w_cmd.close()
+        self.threads_exit = True
+        self.serverIx.stop()
+        print("Application Exit")
+
+    def remap(self):
+        # DCDC Section
+        for x in range(1,6):
+            self.dcdc_tab.append(self.findChild(QtWidgets.QWidget, "tab_dcdc" + str(x)))
+            self.op_mode.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_op_mode_" + str(x)))
+            self.setpoint.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_setpoint_" + str(x)))
+            self.limit_type.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_limit_type_" + str(x)))
+            self.clamp_status.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_clamp_status_" + str(x)))
+            self.con_mode.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_con_mode_" + str(x)))
+            self.con_type.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_con_type_" + str(x)))
+            self.cur_limit.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_cur_limit_" + str(x)))
+            self.errors1.append(self.findChild(QtWidgets.QTextEdit, "textEdit_errors1_" + str(x)))
+            self.errors2.append(self.findChild(QtWidgets.QTextEdit, "textEdit_errors2_" + str(x)))
+            self.warnings.append(self.findChild(QtWidgets.QTextEdit, "textEdit_warnings_" + str(x)))
+            self.measures.append(self.findChild(QtWidgets.QTextEdit, "textEdit_measures_" + str(x)))
+
+        # CRM Section
+        battery = {}
+        bat_mapper = 0
+        for x in range(1,5):
+            self.crm_tab.append(self.findChild(QtWidgets.QWidget, "tab_crm" + str(x)))
+            self.crm_status.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_crm_status_" + str(x)))
+            self.hpr_status.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_hpr_status_" + str(x)))
+            self.or_status.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_or_status_" + str(x)))
+            self.fan_status.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_fan_status_" + str(x)))
+            self.hpr_health.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_hpr_health_" + str(x)))
+            self.or_health.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_or_health_" + str(x)))
+            self.pb_reset.append(self.findChild(QtWidgets.QPushButton, "pushButton_reset_crm_" + str(x)))
+            self.battery_tab.append(self.findChild(QtWidgets.QTabWidget, "tabWidget_crm_batteries_" + str(x)))
+
+            for i in range(1,9):
+                battery["cell1_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_cell1_" + str(i + bat_mapper))
+                battery["cell2_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_cell2_" + str(i + bat_mapper))
+                battery["cell3_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_cell3_" + str(i + bat_mapper))
+                battery["cell4_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_cell4_" + str(i + bat_mapper))
+                battery["batV_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_batv_" + str(i + bat_mapper))
+                battery["batI_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_bati_" + str(i + bat_mapper))
+                battery["batT_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_bat_temp_" + str(i + bat_mapper))
+                battery["comm_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_bat_comm_" + str(i + bat_mapper))
+                battery["cfet_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_bat_cfet_" + str(i + bat_mapper))
+                battery["dfet_" + str(i)] = self.findChild(QtWidgets.QLineEdit, "lineEdit_bat_dfet_" + str(i + bat_mapper))
+
+            self.crm_batteries.append(battery.copy())
+            battery.clear()
+            bat_mapper += 8
+
+        # MRS Section
+        analogs = []
+        relays = []
+        for x in range(1,6):
+            self.mrs_tab.append(self.findChild(QtWidgets.QWidget, "tab_mrs" + str(x)))
+            for y in range(1,14):
+                analogs.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_ch" + str(y) + "_" +str(x)))
+            for y in range(1,13):
+                relays.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_r" + str(y) + "_" +str(x)))
+            self.mrs_analogs.append(analogs.copy())
+            self.mrs_relays.append(relays.copy())
+            analogs.clear()
+            relays.clear()
+
+    def __connect_signal_slots(self):
+        # Connect all signals to slots here
+        self.server_rx_Signal.connect(self.gui_rx_slot)
+        self.server_monitor_Signal.connect(self.gui_monitor_slot)
+        self.actionDCDC_Configuration.triggered.connect(self.dcdc_config_slot)
+        self.actionCRM_Configuration.triggered.connect(self.crm_config_slot)
+        self.actionMRS_Configuration.triggered.connect(self.mrs_config_slot)
+        self.pushButton_start.clicked.connect(self.button_start_stop)
+        self.pushButton_reset_crm_1.clicked.connect(self.button_reset_crm1)
+        self.pushButton_reset_crm_2.clicked.connect(self.button_reset_crm2)
+        self.pushButton_reset_crm_3.clicked.connect(self.button_reset_crm3)
+        self.pushButton_reset_crm_4.clicked.connect(self.button_reset_crm4)
+        self.pushButton_cmd.clicked.connect(self.button_open_cmd)
+        self.cmd_win.pushButton_cmd.clicked.connect(self.send_cmd)
+
+    def open_file(self, filename):
+        if os.path.exists(filename) == False:
+            tdir, OK = QInputDialog.getText(self, 'FileDir', 'input the file dir', QLineEdit.Normal, '')
+            filename = str(os.path.join(tdir, filename.split('\\')[-1]))
+            if OK == False:
+                return False
+        self.update_rate = 2
+        subprocess.Popen(['notepad.exe', filename]).wait()
+        # print('ret',ret)
+        reply = QMessageBox.information(self, 'warning', "you're changing the file:" + filename,
+                                     QMessageBox.Yes | QMessageBox.No)
+        self.update_rate = UPDATE_RATE
+        return (reply == QMessageBox.Yes)
+    
+    def send_crm_reset(self,crm_numb):
+        print("CRM" + str(crm_numb))
+        jsonData = {"request": ("reset_crm" + str(crm_numb))}
+        self.serverIx.send(str.encode(json.dumps(jsonData))) 
+
+    @QtCore.pyqtSlot(bool)
+
+    def send_cmd(self,flag):
+        data = self.cmd_win.lineEdit_cmd.text()
+        print("CMD: " + data)
+        jsonData = {"command": (data)}
+        self.serverIx.send(str.encode(json.dumps(jsonData)))   
+
+    def button_open_cmd(self,flag):
+        self.toggle_window(self.w_cmd)
+
+    def button_reset_crm1(self,flag):
+        print("Reset CRM1")
+        if self.pushButton_reset_crm_1.text() == "Reset Needed":
+            self.send_crm_reset(1) 
+            self.pushButton_reset_crm_1.setText("Resetting")
+
+    def button_reset_crm2(self,flag):
+        print("Reset CRM2")
+        if self.pushButton_reset_crm_2.text() == "Reset Needed":
+            self.send_crm_reset(2)  
+            self.pushButton_reset_crm_2.setText("Resetting")
+
+    def button_reset_crm3(self,flag):
+        print("Reset CRM3")
+        if self.pushButton_reset_crm_3.text() == "Reset Needed":
+            self.send_crm_reset(3) 
+            self.pushButton_reset_crm_3.setText("Resetting")
+
+    def button_reset_crm4(self,flag):
+        print("Reset CRM4")
+        if self.pushButton_reset_crm_4.text() == "Reset Needed":
+            self.send_crm_reset(4) 
+            self.pushButton_reset_crm_4.setText("Resetting") 
+
+    def button_start_stop(self,flag):
+        jsonData = {}
+        print("Start/Stop Button Clicked")
+        if self.pushButton_start.text() == "Start":
+            #self.pushButton_start.setText("Stop")
+            jsonData = {"request": "start"}
+        else:
+            jsonData = {"request": "stop"}
+            #self.pushButton_start.setText("Start")
+
+        self.serverIx.send(str.encode(json.dumps(jsonData))) 
+
+    @QtCore.pyqtSlot(bool) 
+    def dcdc_config_slot(self):
+        # # Testing commands
+        # jsonData = {"command": "mrs"}
+        # self.serverIx.send(str.encode(json.dumps(jsonData))) 
+
+        # Testing message box
+        # self.show_msgbox("DCDC Config action.")
+
+        print("DCDC ")
+        filename = CONFIG_DIR + r'\dcdc_configuration.ini'
+        if( self.open_file(filename) ):
+            jsonData = {"request": "reload_dcdc"}
+            self.serverIx.send(str.encode(json.dumps(jsonData)))    
+
+    def crm_config_slot(self):
+        print("CRM ")
+        # self.show_msgbox("CRM Config action.")
+        filename = CONFIG_DIR + r'\crm_configuration.ini'
+        if( self.open_file(filename) ):
+            jsonData = {"request": "reload_crm"}
+            self.serverIx.send(str.encode(json.dumps(jsonData)))
+
+    def mrs_config_slot(self):
+        print("MRS ")
+        # self.show_msgbox("MRS Config action.")
+        filename =  CONFIG_DIR + r'\mrs_configuration.ini'
+        if( self.open_file(filename) ):
+            jsonData = {"request": "reload_mrs"}
+            self.serverIx.send(str.encode(json.dumps(jsonData)))
+
+    @QtCore.pyqtSlot(str) 
+    def gui_rx_slot(self,sdata):
+        try:
+            self.imc += 1
+            rx_dict : dict = json.loads(sdata)
+            if( "DCDC" in rx_dict.keys() ):
+                kv = rx_dict["data"]
+                self.handle_dcdc_json( rx_dict["DCDC"],kv)
+            elif( "CRM" in rx_dict.keys() ):
+                kv = rx_dict["data"]
+                self.handle_crm_json( rx_dict["CRM"],kv)
+            elif( "MRS" in rx_dict.keys() ):
+                kv = rx_dict["data"]
+                self.handle_mrs_json( rx_dict["MRS"],kv)
+            elif( "state_machine" in rx_dict.keys() ):
+                kv = rx_dict["state_machine"]
+                self.handle_system_json(kv)
+
+        except BaseException as e:
+            print("Exception:", e)
+
+    def handle_dcdc_json(self, dcdc_id, dic):
+         try:
+            id = dcdc_id - 1
+            if( dic["inuse"] == False):
+                self.tabWidget_DCDC.tabBar().setTabVisible(id, False)
+                self.tabWidget_DCDC.adjustSize()
+                return
+            else:
+                self.tabWidget_DCDC.tabBar().setTabVisible(id, True)   
+
+            if( dic["communication"] == False):
+                self.tabWidget_DCDC.tabBar().setTabTextColor(id,QtCore.Qt.red)
+                self.tabWidget_DCDC.widget(id).setStyleSheet("background-color:" + " orange")
+                return
+            else:
+                self.tabWidget_DCDC.tabBar().setTabTextColor(id,QtCore.Qt.black)
+                self.tabWidget_DCDC.widget(id).setStyleSheet("background-color:" + " white") 
+
+            if self.tabWidget_DCDC.currentIndex() != id:
+                return
+            
+            self.op_mode[id].setText(dic["softwareMode"])
+            self.setpoint[id].setText(str(dic["setpoint"]))
+            self.limit_type[id].setText(str(dic["limitationType"]))
+            self.clamp_status[id].setText(str(dic["clampStatus"]))
+            self.con_mode[id].setText(dic["converterMode"])
+            self.con_type[id].setText(dic["controlType"])
+            self.cur_limit[id].setText(str(dic["currentLimit"]))
+            self.errors1[id].setText(str(dic["errors1"]))
+            self.errors2[id].setText(str(dic["errors2"]))
+            self.warnings[id].setText(str(dic["warnings"]))
+            s = ""
+            for k, v in dic.items():
+                if k in ['iLow', 'iHigh', 'iLow2', 'vLow', 'vHigh', 'vlow2', 'vHigh2','pLow', 'pHigh', 'temp1', 'temp2', 'temp3', 'temp4']:
+                    s += str(k) + '\t: ' + str(v) + '\n'
+            self.measures[id].setText(s)
+            
+
+         except BaseException as e:
+             print(e)
+
+    def handle_crm_json(self,crm_id,dic):
+        try:
+            id = crm_id - 1
+            if( dic["inuse"] == False):
+                self.tabWidget_CRM.tabBar().setTabVisible(id, False)
+                self.tabWidget_CRM.adjustSize()
+                return
+            else:
+                self.tabWidget_CRM.tabBar().setTabVisible(id, True)  
+
+            if( dic["communication"] == False):
+                self.tabWidget_CRM.tabBar().setTabTextColor(id,QtCore.Qt.red)
+                self.tabWidget_CRM.widget(id).setStyleSheet("background-color:" + "	orange")
+                return
+            else:
+                self.tabWidget_CRM.tabBar().setTabTextColor(id,QtCore.Qt.black)
+                self.tabWidget_CRM.widget(id).setStyleSheet("background-color:" + " white")
+
+            if self.tabWidget_CRM.currentIndex() != id:
+                return
+
+            self.crm_status[id].setText(str( "OK" if dic["crm_health_status"] == 0 else "Fault"))
+            self.crm_status[id].setStyleSheet(
+                    "background-color:" + ("orange" if dic["crm_health_status"] != 0 else "lightgreen"))
+            
+            self.hpr_status[id].setText(str("Open" if dic["halfpack_relay_status"] == 0 else "Closed"))
+            self.hpr_status[id].setStyleSheet(
+                    "background-color:" + ("lightyellow" if dic["halfpack_relay_status"] == 0 else "lightgreen"))
+            
+            self.or_status[id].setText(str("Open" if dic["output_relay_status"] == 0 else "Closed"))
+            self.or_status[id].setStyleSheet(
+                    "background-color:" + ("lightyellow" if dic["output_relay_status"] == 0 else "lightgreen"))
+            
+            self.fan_status[id].setText(str(dic["fan_status"]) + "%")
+            
+            self.hpr_health[id].setText(str("Fault" if dic["halfpack_relay_health"] == 0 else "OK"))
+            self.hpr_health[id].setStyleSheet(
+                    "background-color:" + ("orange" if dic["halfpack_relay_health"] == 0 else "lightgreen"))
+            
+            self.or_health[id].setText(str("Fault" if dic["output_relay_health"] == 0 else "OK"))
+            self.or_health[id].setStyleSheet(
+                    "background-color:" + ("orange" if dic["output_relay_health"] == 0 else "lightgreen"))
+            
+            self.pb_reset[id].setText(str("Reset Needed" if dic["reset_needed"] == 1 else "Reset"))
+            self.pb_reset[id].setStyleSheet(
+                    "background-color:" + ("orangered" if dic["reset_needed"] == 1 else "lightgreen"))
+            
+            # All 8 batteries           
+            for i in range(1,9):
+                battery = self.crm_batteries[id]
+                bat_json = dic["battery_" + str(i)]
+
+                if((bat_json["discharge_fet_status"] == 0) | 
+                   (bat_json["comm_status"] == 0) | 
+                   (bat_json["charge_fet_status"] == 0)):
+                    self.battery_tab[id].tabBar().setTabTextColor(i-1,QtCore.Qt.red) 
+                else:
+                    self.battery_tab[id].tabBar().setTabTextColor(i-1,QtCore.Qt.black)  
+
+                if self.battery_tab[id].currentIndex() == i-1:  
+                    battery["cell1_" + str(i)].setText(str(bat_json["cell_voltage_1"]))
+                    battery["cell2_" + str(i)].setText(str(bat_json["cell_voltage_2"]))
+                    battery["cell3_" + str(i)].setText(str(bat_json["cell_voltage_3"]))
+                    battery["cell4_" + str(i)].setText(str(bat_json["cell_voltage_4"]))
+                    battery["batV_" + str(i)].setText(str(bat_json["battery_voltage"]))
+                    battery["batI_" + str(i)].setText(str(bat_json["battery_current"]))
+                    battery["batT_" + str(i)].setText(str(bat_json["battery_temp"]))
+
+                    battery["cfet_" + str(i)].setText(str("Fault" if bat_json["charge_fet_status"] == 0 else "OK"))
+                    battery["cfet_" + str(i)].setStyleSheet(
+                        "background-color:" + ("orange" if bat_json["charge_fet_status"] == 0 else "lightgreen"))
+                    
+                    battery["dfet_" + str(i)].setText(str("Fault" if bat_json["discharge_fet_status"] == 0 else "OK"))
+                    battery["dfet_" + str(i)].setStyleSheet(
+                        "background-color:" + ("orange" if bat_json["discharge_fet_status"] == 0 else "lightgreen"))
+                    
+                    battery["comm_" + str(i)].setText(str("Fault" if bat_json["comm_status"] == 0 else "OK"))
+                    battery["comm_" + str(i)].setStyleSheet(
+                        "background-color:" + ("orange" if bat_json["comm_status"] == 0 else "lightgreen"))
+    
+        except BaseException as e:
+            print("handle_crm_json Exception: " + str(e) )
+        
+    def handle_mrs_json(self,mrs_id,dic):
+        try:
+            # print("\n\rMRS ID = " + str(mrs_id))
+            # print(dic)
+            id = mrs_id - 1
+            if( dic["inuse"] == False):
+                self.tabWidget_MRS.tabBar().setTabVisible(id, False)
+                self.tabWidget_MRS.adjustSize()
+                return
+            else:
+                self.tabWidget_MRS.tabBar().setTabVisible(id, True)
+
+            if( dic["communication"] == False):
+                self.tabWidget_MRS.tabBar().setTabTextColor(id,QtCore.Qt.red)
+                self.tabWidget_MRS.widget(id).setStyleSheet("background-color:" + " orange")
+                return
+            else:
+                self.tabWidget_MRS.tabBar().setTabTextColor(id,QtCore.Qt.black)
+                self.tabWidget_MRS.widget(id).setStyleSheet("background-color:" + " white")
+
+            if self.tabWidget_MRS.currentIndex() != id:
+                return
+
+            for i in range(1,14):
+                self.mrs_analogs[id][i-1].setText(str(dic["AnalogChannel"+str(i)]))
+                self.mrs_analogs[id][i-1].setStyleSheet(
+                    "background-color:" + ("lightyellow" if dic['AnalogChannel' + str(i)] == 0 else "lightgreen"))
+
+            for i in range(1,13):
+                self.mrs_relays[id][i-1].setText("Open" if dic["relay"+str(i)] == False else "Closed")  
+                self.mrs_relays[id][i-1].setStyleSheet(
+                    "background-color:" + ("lightyellow" if dic['relay' + str(i)] == False else "lightgreen"))
+
+
+        except BaseException as e:
+            print(e)
+
+    def handle_system_json(self,dic):
+        self.lineEdit_input_voltage.setText(str(dic["input_voltage"]))
+        self.lineEdit_input_current.setText(str(dic["input_current"]))
+        self.lineEdit_output_voltage.setText(str(dic["output_voltage"]))
+        self.lineEdit_output_current.setText(str(dic["output_current"]))
+        self.label_server_status.setText(str(dic["current_state"]))
+        self.textEdit_system_status.setText(str(dic["faults"]))
+        if( str(dic["faults"]) == "NO FAULT"):
+            self.textEdit_system_status.setStyleSheet("background-color: lightgray")
+        else:
+            self.textEdit_system_status.setStyleSheet("background-color: red")
+
+        state = str(dic["current_state"]).lower()
+        if state == "standby":
+            self.pushButton_start.setText("Start")
+            self.pushButton_start.setStyleSheet("background-color: lightgreen")
+        elif state == "fault":
+            self.pushButton_start.setText("Not Ready")
+            self.pushButton_start.setStyleSheet("background-color: orangered")
+        elif state == "starting":
+            self.pushButton_start.setText("Starting")
+            self.pushButton_start.setStyleSheet("background-color: lightyellow")
+        elif state == "running":
+            self.pushButton_start.setText("Stop")
+            self.pushButton_start.setStyleSheet("background-color: blue")
+        else:
+            self.pushButton_start.setText("System Status Unknown")
+            self.pushButton_start.setStyleSheet("background-color: lightyellow")
+ 
+    def gui_monitor_slot(self,status):
+        if(self.imc == self.pimc):
+            # server not connected
+            self.label_server_status.setText("Server Offline!")
+            self.textEdit_system_status.setText("Server is not communicating!")
+            self.textEdit_system_status.setStyleSheet("background-color: red")
+        else:
+            self.pimc = self.imc
+              
+    def __update_thread_processor(self):
+        val = 0.0
+        while True:
+            time.sleep(self.update_rate)
+            jsonData = {"request": "update"}
+            self.serverIx.send(str.encode(json.dumps(jsonData)))
+            if self.threads_exit == True:
+                break
+
+    def __monitor_thread_processor(self):
+        val = 0.0
+        while True:
+            self.server_monitor_Signal.emit("None")
+            time.sleep(2)
+            # monitor the server and connections here
+            if self.threads_exit == True:
+                break
+
+    def __server_receiver(self, data):
+        self.server_rx_Signal.emit(data.decode())
+
+    def __start_server_connection(self):
+        self.serverIx.start()
+
+    def show_msgbox(self, message):
+        msg = QtWidgets.QMessageBox()
+        msg.setIcon(QtWidgets.QMessageBox.Information)
+        msg.setText("MessageBox!")
+        msg.setInformativeText(message)
+        msg.setWindowTitle(message)
+        msg.setDetailedText("The details are as follows:")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        retval = msg.exec_()
+
+    def toggle_window(self, window):
+        if window.isVisible():
+            window.hide()
+
+        else:
+            window.show()
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    qt_app = uiMain()
+    app.exec_()

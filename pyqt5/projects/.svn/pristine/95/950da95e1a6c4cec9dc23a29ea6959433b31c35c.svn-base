@@ -1,0 +1,2056 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1319</width>
+    <height>866</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>FastCharger Controller HMI</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="main_frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="1" column="1">
+        <widget class="QFrame" name="frame_MRS">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="groupMRS">
+            <property name="title">
+             <string>MRS</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QFrame" name="frame_mrs">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_10">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QTabWidget" name="tabWidget_MRS">
+                  <property name="currentIndex">
+                   <number>0</number>
+                  </property>
+                  <widget class="QWidget" name="tab_mrs1">
+                   <attribute name="title">
+                    <string>MRS_1</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_25"/>
+                  </widget>
+                  <widget class="QWidget" name="tab_mrs2">
+                   <attribute name="title">
+                    <string>MRS_2</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_23"/>
+                  </widget>
+                  <widget class="QWidget" name="tab_mrs3">
+                   <attribute name="title">
+                    <string>MRS_3</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_24"/>
+                  </widget>
+                  <widget class="QWidget" name="tab_mrs4">
+                   <attribute name="title">
+                    <string>MRS_4</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_22"/>
+                  </widget>
+                  <widget class="QWidget" name="tab">
+                   <attribute name="title">
+                    <string>MRS_5</string>
+                   </attribute>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QFrame" name="frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="groupDCDC">
+            <property name="title">
+             <string>DCDC</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QFrame" name="frame_dcdc">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_dcdc">
+                <property name="leftMargin">
+                 <number>1</number>
+                </property>
+                <property name="topMargin">
+                 <number>1</number>
+                </property>
+                <property name="rightMargin">
+                 <number>1</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>1</number>
+                </property>
+                <property name="spacing">
+                 <number>1</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QTabWidget" name="tabWidget_DCDC">
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="currentIndex">
+                   <number>0</number>
+                  </property>
+                  <widget class="QWidget" name="tab_dcdc1">
+                   <attribute name="title">
+                    <string>DCDC_1</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_11">
+                    <item row="0" column="0">
+                     <widget class="QFrame" name="frame_9">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <widget class="QGroupBox" name="groupBox_warnings">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>218</y>
+                         <width>131</width>
+                         <height>93</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Warnings</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_warnings">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_measures">
+                       <property name="geometry">
+                        <rect>
+                         <x>397</x>
+                         <y>10</y>
+                         <width>164</width>
+                         <height>301</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Measurements</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_measures">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>20</y>
+                          <width>141</width>
+                          <height>271</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors2">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>114</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 2</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors2">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors1">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>10</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 1</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors1">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_control">
+                       <property name="geometry">
+                        <rect>
+                         <x>10</x>
+                         <y>10</y>
+                         <width>241</width>
+                         <height>202</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Controls</string>
+                       </property>
+                       <widget class="QLabel" name="label_op_mode">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>23</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Operation</string>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_mode">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>48</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Mode</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_mode">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>48</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_op_mode">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>23</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_type">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>73</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_type">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>73</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_setpoint">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>98</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Set Point</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_setpoint">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>98</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_limit_type">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>123</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Limit Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_limit_type">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>123</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_cur_limit">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>148</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Current Limit</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_cur_limit">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>148</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_clamp_status">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>173</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Clamp Status</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_clamp_status">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>173</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="tab_dcdc2">
+                   <attribute name="title">
+                    <string>DCDC_2</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_12">
+                    <item row="0" column="0">
+                     <widget class="QFrame" name="frame_10">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <widget class="QGroupBox" name="groupBox_warnings_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>218</y>
+                         <width>131</width>
+                         <height>93</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Warnings</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_warnings_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_measures_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>397</x>
+                         <y>10</y>
+                         <width>164</width>
+                         <height>301</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Measurements</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_measures_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>20</y>
+                          <width>141</width>
+                          <height>271</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors2_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>114</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 2</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors2_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors1_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>10</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 1</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors1_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_control_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>10</x>
+                         <y>10</y>
+                         <width>241</width>
+                         <height>202</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Controls</string>
+                       </property>
+                       <widget class="QLabel" name="label_op_mode_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>23</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Operation</string>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_mode_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>48</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Mode</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_mode_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>48</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_op_mode_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>23</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_type_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>73</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_type_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>73</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_setpoint_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>98</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Set Point</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_setpoint_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>98</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_limit_type_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>123</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Limit Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_limit_type_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>123</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_cur_limit_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>148</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Current Limit</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_cur_limit_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>148</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_clamp_status_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>173</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Clamp Status</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_clamp_status_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>173</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="tab_dcdc3">
+                   <attribute name="title">
+                    <string>DCDC_3</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_14">
+                    <item row="0" column="0">
+                     <widget class="QFrame" name="frame_11">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <widget class="QGroupBox" name="groupBox_warnings_3">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>218</y>
+                         <width>131</width>
+                         <height>93</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Warnings</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_warnings_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_measures_3">
+                       <property name="geometry">
+                        <rect>
+                         <x>397</x>
+                         <y>10</y>
+                         <width>164</width>
+                         <height>301</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Measurements</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_measures_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>20</y>
+                          <width>141</width>
+                          <height>271</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors2_3">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>114</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 2</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors2_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors1_3">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>10</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 1</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors1_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_control_3">
+                       <property name="geometry">
+                        <rect>
+                         <x>10</x>
+                         <y>10</y>
+                         <width>241</width>
+                         <height>202</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Controls</string>
+                       </property>
+                       <widget class="QLabel" name="label_op_mode_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>23</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Operation</string>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_mode_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>48</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Mode</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_mode_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>48</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_op_mode_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>23</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_type_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>73</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_type_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>73</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_setpoint_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>98</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Set Point</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_setpoint_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>98</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_limit_type_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>123</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Limit Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_limit_type_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>123</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_cur_limit_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>148</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Current Limit</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_cur_limit_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>148</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_clamp_status_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>173</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Clamp Status</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_clamp_status_3">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>173</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="tab_dcdc4">
+                   <attribute name="title">
+                    <string>DCDC_4</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_15">
+                    <item row="0" column="0">
+                     <widget class="QFrame" name="frame_12">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <widget class="QGroupBox" name="groupBox_warnings_4">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>218</y>
+                         <width>131</width>
+                         <height>93</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Warnings</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_warnings_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_measures_4">
+                       <property name="geometry">
+                        <rect>
+                         <x>397</x>
+                         <y>10</y>
+                         <width>164</width>
+                         <height>301</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Measurements</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_measures_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>20</y>
+                          <width>141</width>
+                          <height>271</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors2_4">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>114</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 2</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors2_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors1_4">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>10</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 1</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors1_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_control_4">
+                       <property name="geometry">
+                        <rect>
+                         <x>10</x>
+                         <y>10</y>
+                         <width>241</width>
+                         <height>202</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Controls</string>
+                       </property>
+                       <widget class="QLabel" name="label_op_mode_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>23</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Operation</string>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_mode_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>48</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Mode</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_mode_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>48</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_op_mode_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>23</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_type_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>73</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_type_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>73</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_setpoint_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>98</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Set Point</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_setpoint_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>98</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_limit_type_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>123</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Limit Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_limit_type_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>123</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_cur_limit_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>148</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Current Limit</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_cur_limit_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>148</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_clamp_status_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>173</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Clamp Status</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_clamp_status_4">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>173</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="tab_dcdc5">
+                   <attribute name="title">
+                    <string>DCDC_5</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_16">
+                    <item row="0" column="0">
+                     <widget class="QFrame" name="frame_13">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <widget class="QGroupBox" name="groupBox_warnings_5">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>218</y>
+                         <width>131</width>
+                         <height>93</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Warnings</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_warnings_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_measures_5">
+                       <property name="geometry">
+                        <rect>
+                         <x>397</x>
+                         <y>10</y>
+                         <width>164</width>
+                         <height>301</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Measurements</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_measures_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>20</y>
+                          <width>141</width>
+                          <height>271</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors2_5">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>114</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 2</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors2_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_errors1_5">
+                       <property name="geometry">
+                        <rect>
+                         <x>260</x>
+                         <y>10</y>
+                         <width>131</width>
+                         <height>98</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Errors 1</string>
+                       </property>
+                       <widget class="QTextEdit" name="textEdit_errors1_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>13</x>
+                          <y>20</y>
+                          <width>111</width>
+                          <height>64</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                      <widget class="QGroupBox" name="groupBox_control_5">
+                       <property name="geometry">
+                        <rect>
+                         <x>10</x>
+                         <y>10</y>
+                         <width>241</width>
+                         <height>202</height>
+                        </rect>
+                       </property>
+                       <property name="title">
+                        <string>Controls</string>
+                       </property>
+                       <widget class="QLabel" name="label_op_mode_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>23</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Operation</string>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_mode_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>48</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Mode</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_mode_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>48</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_op_mode_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>23</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_con_type_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>73</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_con_type_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>73</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_setpoint_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>98</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Set Point</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_setpoint_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>98</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_limit_type_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>123</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Limit Type</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_limit_type_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>123</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_cur_limit_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>148</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Current Limit</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_cur_limit_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>148</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="label_clamp_status_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>173</y>
+                          <width>91</width>
+                          <height>16</height>
+                         </rect>
+                        </property>
+                        <property name="text">
+                         <string>Clamp Status</string>
+                        </property>
+                       </widget>
+                       <widget class="QLineEdit" name="lineEdit_clamp_status_5">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>173</y>
+                          <width>120</width>
+                          <height>19</height>
+                         </rect>
+                        </property>
+                        <property name="readOnly">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QFrame" name="frame_3">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="groupSystem">
+            <property name="title">
+             <string>System Control</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="0" column="0">
+              <widget class="QFrame" name="frame_system">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_13">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QGroupBox" name="groupCRM">
+            <property name="title">
+             <string>CRM</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_9">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QFrame" name="frame_crm">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_CRM">
+                <property name="leftMargin">
+                 <number>1</number>
+                </property>
+                <property name="topMargin">
+                 <number>1</number>
+                </property>
+                <property name="rightMargin">
+                 <number>1</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>1</number>
+                </property>
+                <property name="spacing">
+                 <number>1</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QTabWidget" name="tabWidget_CRM">
+                  <property name="currentIndex">
+                   <number>0</number>
+                  </property>
+                  <widget class="QWidget" name="tab_crm1">
+                   <attribute name="title">
+                    <string>CRM_1</string>
+                   </attribute>
+                  </widget>
+                  <widget class="QWidget" name="tab_crm2">
+                   <attribute name="title">
+                    <string>CRM_2</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_20"/>
+                  </widget>
+                  <widget class="QWidget" name="tab_crm3">
+                   <attribute name="title">
+                    <string>CRM_3</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_21"/>
+                  </widget>
+                  <widget class="QWidget" name="tab_crm4">
+                   <attribute name="title">
+                    <string>CRM_4</string>
+                   </attribute>
+                   <layout class="QGridLayout" name="gridLayout_19"/>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1319</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <widget class="QMenu" name="menuDCDC_File">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionDCDC_Configuration"/>
+    <addaction name="actionCRM_Configuration"/>
+    <addaction name="actionMRS_Configuration"/>
+   </widget>
+   <addaction name="menuDCDC_File"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDCDC_Configuration">
+   <property name="text">
+    <string>DCDC Configuration</string>
+   </property>
+  </action>
+  <action name="actionCRM_Configuration">
+   <property name="text">
+    <string>CRM Configuration</string>
+   </property>
+  </action>
+  <action name="actionMRS_Configuration">
+   <property name="text">
+    <string>MRS Configuration</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,110 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+import fc_hmi
+import udp_client_class
+import threading
+import time
+import sys
+import json
+
+
+class uiMain( fc_hmi.Ui_MainWindow, QtWidgets.QMainWindow):
+    # For some strange reason this must be outside the __init__ function
+    server_rx_Signal = QtCore.pyqtSignal(str)
+
+    def __init__(self):
+        super(uiMain,self).__init__()
+        self.setupUi(self)
+        self.server_ip = "127.0.0.1"
+        self.server_port = 20001
+        self.gui_ip = "127.0.0.1"
+        self.gui_port = 20003
+        # self.tab.setStyleSheet("background-color: lightgrey;")
+        # self.set_tab1_background_color()
+        # self.pushButton.clicked.connect(self.toggle_color)
+        # self.bg = False
+        self.serverIx = udp_client_class.udpClientObject(self.server_ip, self.server_port, self.gui_ip, self.gui_port, self.__server_receiver)
+        self.app = None
+        self.my_signal_slots()
+        self.my_thread = threading.Thread(target = self.__my_thread_processor)
+        self.__start_server_connection()
+        self.threads_exit = False
+        self.show()
+
+    def my_signal_slots(self):
+        # create a signal equivalent to "void someSignal(int, QWidget)"
+        self.server_rx_Signal.connect(self.gui_rx_slot)
+
+    @QtCore.pyqtSlot(str) 
+    def gui_rx_slot(self,sdata):
+        try:
+            rx_dict : dict = json.loads(sdata)
+            print(rx_dict)
+            self.textEdit.setText(str(json.dumps(str(rx_dict))))
+        except BaseException as e:
+            print("Exception:", e)
+            print(sdata)
+        # if( "DCDC_1" in rx_dict.keys() ):
+        #      self.textEdit.setText("")
+        # self.textEdit.append(str(json.dumps(str(rx_dict))))
+        #self.textEdit.setText(str(json.dumps(str(rx_dict)))+"\n"+str(rx_dict["coursesMarks"]["Count"]))
+    
+    def mythread_start(self):
+        self.my_thread.start()
+        
+    def __my_thread_processor(self):
+        val = 0.0
+        while True:
+            val += 0.125
+            jsonData = {"dcdc1": {"one":1.25,"two":[1,2,3,val]}}
+            self.serverIx.send(str.encode(json.dumps(jsonData)))
+            time.sleep(2)
+            # jsonData = {"dcdc2": {"one":1.0,"two":{"a":1,"b":2,"c":3.0,"d":val}}}
+            # self.serverIx.send(str.encode(json.dumps(jsonData)))
+            # # jsonData = {'firstName' : "Edward", "lastName": "John", "coursesMarks":{'English' : 20,"Science":45, "Maths": 48, "Count": val}}
+            # # self.serverIx.send(str.encode(json.dumps(jsonData)))
+            # time.sleep(1)
+            if self.threads_exit == True:
+                break
+
+
+    def __server_receiver(self, data):
+        self.server_rx_Signal.emit(data.decode())
+
+    def __start_server_connection(self):
+        self.serverIx.start()
+
+    # def set_tab1_background_color(self):
+    #     #st = self.tab.palette().window().color()
+    #     # setStyleSheet("background-color: default;")
+    #     #print(st.name(0))
+    #     #self.tab.setAutoFillBackground(True)
+    #     self.tab.setStyleSheet("color: red;")
+    #     self.bg = True
+    #     # palette = self.tab.palette()
+    #     # prev_color = self.tab.styleSheet()
+    #     # palette.setColor(self.tab.backgroundRole(), QtCore.Qt.red)
+    #     # self.tab.setPalette(palette)
+
+    
+    # def toggle_color(self):
+    #     print(self.bg)
+    #     if( self.bg == True ):
+    #          print("Set False")
+    #          #self.tab.setAutoFillBackground(False)
+    #          self.tab.setStyleSheet("border-color: lightgray;")
+    #          self.bg = False
+    #     else:
+    #         print("Set True")
+    #         #self.tab.setAutoFillBackground(True)
+    #         self.tab.setStyleSheet("border-color: red;")
+    #         self.bg = True
+
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    qt_app = uiMain()
+    qt_app.mythread_start()
+    app.exec_()
+    qt_app.threads_exit = True
+    qt_app.serverIx.stop()
+    print("Application Exit")

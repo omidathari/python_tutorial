@@ -1,0 +1,192 @@
+
+The Fast Charger system controller application will report system status via JSON packets.
+There packets will contain all the relevent data needed to present the system status to the
+Fast Charger HMI.  
+The communication between the controller and the HMI will use a UDP socket.
+The controller application will be the UDP server and the HMI will be the UDP client.
+
+The HMI will receive a complete update from the server upon making a request using the
+following JSON packet.  The frequency of this request is based on HMI requirements but the maximum
+recommended update frequency is 10Hz (100 ms period) 
+
+{ "request": "update }
+
+
+Fast Charger HMI JSON messages:
+
+Each DCDC Converter will have the following associated packet. 
+The Following is the structure for the first DCDC in the system (DCDC_1)  
+There will be a total of 5 DCDC converters in the system (DCDC_1 thru DCDC_5) 
+{
+        "DCDC": 1,
+        "data": {
+                "inuse":        true,
+                "communication":        false,
+                "softwareMode": "standby",
+                "setpoint":     0,
+                "limitationType":       0,
+                "clampStatus":  0,
+                "converterMode":        "notSet",
+                "controlType":  "notSet",
+                "currentLimit": 0,
+                "errors1":      0,
+                "errors2":      0,
+                "warnings":     0,
+                "iLow": 0,
+                "iHigh":        0,
+                "iLow2":        0,
+                "iHigh2":       0,
+                "vLow": 0,
+                "vHigh":        0,
+                "vlow2":        0,
+                "vHigh2":       0,
+                "pLow": 0,
+                "pHigh":        0,
+                "temp1":        0,
+                "temp2":        0,
+                "temp3":        0,
+                "temp4":        0
+        }
+}
+
+The CRM modules data is as follows.  There will be 4 CRM modules in the system. (CRM_1 thru CRM_4)
+{
+        "CRM":  1,
+        "data": {
+                "inuse":        true,
+                "communication":        false,
+                "crm_health_status":    0,
+                "halfpack_relay_health":        0,
+                "output_relay_health":  0,
+                "halfpack_relay_status":        0,
+                "output_relay_status":  0,
+                "fan_status":   0,
+                "battery_1":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                },
+                "battery_2":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                },
+                "battery_3":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                },
+                "battery_4":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                },
+                "battery_5":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                },
+                "battery_6":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                },
+                "battery_7":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                },
+                "battery_8":    {
+                        "cell_voltage_1":       0,
+                        "cell_voltage_2":       0,
+                        "cell_voltage_3":       0,
+                        "cell_voltage_4":       0,
+                        "battery_voltage":      0,
+                        "comm_status":  0,
+                        "battery_temp": 0,
+                        "battery_current":      0
+                }
+        }
+}
+
+Each MRS module contains 12 relays and 13 analog inputs.
+There will be 5 or more MRS modules in the system 
+{
+        "MRS":  1,
+        "data": {
+                "inuse":        true,
+                "communication":        false,
+                "AnalogChannel1":       0,
+                "AnalogChannel2":       0,
+                "AnalogChannel3":       0,
+                "AnalogChannel4":       0,
+                "AnalogChannel5":       0,
+                "AnalogChannel6":       0,
+                "AnalogChannel7":       0,
+                "AnalogChannel8":       0,
+                "AnalogChannel9":       0,
+                "AnalogChannel10":      0,
+                "AnalogChannel11":      0,
+                "AnalogChannel12":      0,
+                "AnalogChannel13":      0,
+                "relay1":       false,
+                "relay2":       false,
+                "relay3":       false,
+                "relay4":       false,
+                "relay5":       false,
+                "relay6":       false,
+                "relay7":       false,
+                "relay8":       false,
+                "relay9":       false,
+                "relay10":      false,
+                "relay11":      false,
+                "relay12":      false
+        }
+}
+
+The main application state machine will report the following data.
+{
+        "state_machine":        {
+                "current_state":        "standby",
+                "input_voltage":        0,
+                "input_current":        0,
+                "output_voltage":       0,
+                "output_current":       0,
+                "faults":       0
+        }
+}

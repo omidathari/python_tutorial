@@ -1,0 +1,218 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+import fc_hmi
+import udp_client_class
+import threading
+import time
+import sys
+import json
+
+
+class uiMain( fc_hmi.Ui_MainWindow, QtWidgets.QMainWindow):
+    # For some strange reason this must be outside the __init__ function
+    server_rx_Signal = QtCore.pyqtSignal(str)
+
+    def __init__(self):
+        super(uiMain,self).__init__()
+        self.setupUi(self)
+        self.server_ip = "127.0.0.1"
+        self.server_port = 20001
+        self.gui_ip = "127.0.0.1"
+        self.gui_port = 20003
+        # self.tab.setStyleSheet("background-color: lightgrey;")
+        # self.set_tab1_background_color()
+        # self.pushButton.clicked.connect(self.toggle_color)
+        # self.bg = False
+        self.serverIx = udp_client_class.udpClientObject(self.server_ip, self.server_port, self.gui_ip, self.gui_port, self.__server_receiver)
+        self.app = None
+        self.my_signal_slots()
+        self.my_thread = threading.Thread(target = self.__my_thread_processor)
+        self.__start_server_connection()
+        self.threads_exit = False
+        # remap controls for easy access
+        self.dcdc_tab = []
+        self.le_op_mode = []
+        self.le_setpoint = []
+        self.le_limit_type = []
+        self.le_clamp_status = []
+        self.le_con_mode = []
+        self.le_con_type = []
+        self.le_cur_limit = []
+        self.te_errors1 = []
+        self.te_errors2 = []
+        self.te_warnings = []
+        self.te_measures = []
+
+        self.crm_tab = []
+        self.mrs_tab = []
+        self.remap()
+        self.show()
+
+    def remap(self):
+        index = 1
+        for x in range(1,6):
+            self.dcdc_tab.append(self.findChild(QtWidgets.QWidget, "tab_dcdc" + str(x)))
+            self.mrs_tab.append(self.findChild(QtWidgets.QWidget, "tab_mrs" + str(x)))
+            self.le_op_mode.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_op_mode_" + str(x)))
+            self.le_setpoint.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_setpoint_" + str(x)))
+            self.le_limit_type.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_limit_type_" + str(x)))
+            self.le_clamp_status.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_clamp_status_" + str(x)))
+            self.le_con_mode.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_con_mode_" + str(x)))
+            self.le_con_type.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_con_type_" + str(x)))
+            self.le_cur_limit.append(self.findChild(QtWidgets.QLineEdit, "lineEdit_cur_limit_" + str(x)))
+            self.te_errors1.append(self.findChild(QtWidgets.QTextEdit, "textEdit_errors1_" + str(x)))
+            self.te_errors2.append(self.findChild(QtWidgets.QTextEdit, "textEdit_errors2_" + str(x)))
+            self.te_warnings.append(self.findChild(QtWidgets.QTextEdit, "textEdit_warnings_" + str(x)))
+            self.te_measures.append(self.findChild(QtWidgets.QTextEdit, "textEdit_measures_" + str(x)))
+
+        for x in range(1,5):
+            self.crm_tab.append(self.findChild(QtWidgets.QWidget, "tab_crm" + str(x)))
+
+        print(self.dcdc_tab)
+        print(self.crm_tab)
+        print(self.mrs_tab)
+
+        self.le_op_mode.append(self.lineEdit_op_mode_1)
+        self.le_op_mode.append(self.lineEdit_op_mode_2)
+        self.le_op_mode.append(self.lineEdit_op_mode_3)
+        self.le_op_mode.append(self.lineEdit_op_mode_4)
+        self.le_op_mode.append(self.lineEdit_op_mode_5)
+
+    def my_signal_slots(self):
+        # create a signal equivalent to "void someSignal(int, QWidget)"
+        self.server_rx_Signal.connect(self.gui_rx_slot)
+
+    @QtCore.pyqtSlot(str) 
+    def gui_rx_slot(self,sdata):
+        try:
+            rx_dict : dict = json.loads(sdata)
+           #print(rx_dict)
+            print(sdata + "\r\n")
+            #self.textEdit.setText(str(json.dumps(str(rx_dict))))
+            if( "DCDC" in rx_dict.keys() ):
+                kv = rx_dict["data"]
+                self.handle_dcdc_json( rx_dict["DCDC"],kv)
+            elif( "CRM" in rx_dict.keys() ):
+                kv = rx_dict["data"]
+                self.handle_crm_json( rx_dict["CRM"],kv)
+            elif( "MRS" in rx_dict.keys() ):
+                kv = rx_dict["data"]
+                self.handle_mrs_json( rx_dict["MRS"],kv)
+            elif( "state_machine" in rx_dict.keys() ):
+                kv = rx_dict["state_machine"]
+                self.handle_system_json(kv)
+
+        except BaseException as e:
+            print("Exception:", e)
+            # print(sdata)
+       
+        #self.textEdit.setText(str(json.dumps(str(rx_dict)))+"\n"+str(rx_dict["coursesMarks"]["Count"]))
+
+    def handle_dcdc_json(self, dcdc_id, dic):
+         try:
+            id = dcdc_id - 1
+            if( dic["inuse"] == False):
+                self.tabWidget_DCDC.tabBar().setTabVisible(id, False)
+                return
+            if( dic["communication"] == False):
+                self.tabWidget_DCDC.tabBar().setTabTextColor(id,QtCore.Qt.red)
+            
+            self.le_op_mode[id].setText(dic["softwareMode"])
+            self.le_setpoint[id].setText(str(dic["setpoint"]))
+            self.le_limit_type[id].setText(str(dic["limitationType"]))
+            self.le_clamp_status[id].setText(str(dic["clampStatus"]))
+            self.le_con_mode[id].setText(dic["converterMode"])
+            self.le_con_type[id].setText(dic["controlType"])
+            self.le_cur_limit[id].setText(str(dic["currentLimit"]))
+            self.te_errors1[id].setText(str(dic["errors1"]))
+            self.te_errors2[id].setText(str(dic["errors2"]))
+            self.te_warnings[id].setText(str(dic["warnings"]))
+            self.te_measures[id].setText(str(str(dic["iLow"])))
+         except BaseException as e:
+             print(e)
+
+    def handle_crm_json(self,crm_id,dic):
+        try:
+            id = crm_id - 1
+            if( dic["inuse"] == False):
+                self.tabWidget_CRM.tabBar().setTabVisible(id, False)
+                return
+            if( dic["communication"] == False):
+                self.tabWidget_CRM.tabBar().setTabTextColor(id,QtCore.Qt.red)
+        except BaseException as e:
+            print(e)
+        
+    def handle_mrs_json(self,mrs_id,dic):
+        try:
+            id = mrs_id - 1
+            if( dic["inuse"] == False):
+                self.tabWidget_MRS.tabBar().setTabVisible(id, False)
+                return
+            if( dic["communication"] == False):
+                self.tabWidget_MRS.tabBar().setTabTextColor(id,QtCore.Qt.red)
+        except BaseException as e:
+            print(e)
+
+    def handle_system_json(self,dic):
+        pass
+
+        #  self.lineEdit_setpoint.setText(dic["setpoint"])
+        #  self.lineEdit_setpoint.setText(dic["setpoint"])
+        #  self.lineEdit_setpoint.setText(dic["setpoint"])
+        #  self.lineEdit_setpoint.setText(dic["setpoint"])
+        #  for i in dic.items():
+        #     print(f"Key {i[0]}, value = {i[1]}")
+    
+    def mythread_start(self):
+        self.my_thread.start()
+        
+    def __my_thread_processor(self):
+        val = 0.0
+        while True:
+            time.sleep(1) # 0.100 minimum
+            val += 0.125
+            jsonData = {"request": "update"}
+            self.serverIx.send(str.encode(json.dumps(jsonData)))
+            if self.threads_exit == True:
+                break
+
+    def __server_receiver(self, data):
+        self.server_rx_Signal.emit(data.decode())
+
+    def __start_server_connection(self):
+        self.serverIx.start()
+
+    # def set_tab1_background_color(self):
+    #     #st = self.tab.palette().window().color()
+    #     # setStyleSheet("background-color: default;")
+    #     #print(st.name(0))
+    #     #self.tab.setAutoFillBackground(True)
+    #     self.tab.setStyleSheet("color: red;")
+    #     self.bg = True
+    #     # palette = self.tab.palette()
+    #     # prev_color = self.tab.styleSheet()
+    #     # palette.setColor(self.tab.backgroundRole(), QtCore.Qt.red)
+    #     # self.tab.setPalette(palette)
+
+    
+    # def toggle_color(self):
+    #     print(self.bg)
+    #     if( self.bg == True ):
+    #          print("Set False")
+    #          #self.tab.setAutoFillBackground(False)
+    #          self.tab.setStyleSheet("border-color: lightgray;")
+    #          self.bg = False
+    #     else:
+    #         print("Set True")
+    #         #self.tab.setAutoFillBackground(True)
+    #         self.tab.setStyleSheet("border-color: red;")
+    #         self.bg = True
+
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    qt_app = uiMain()
+    qt_app.mythread_start()
+    app.exec_()
+    qt_app.threads_exit = True
+    qt_app.serverIx.stop()
+    print("Application Exit")

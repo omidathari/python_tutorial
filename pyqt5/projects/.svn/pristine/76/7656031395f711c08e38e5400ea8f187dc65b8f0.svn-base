@@ -1,0 +1,2 @@
+    ui.tabWidget_DCDC.tabBar().setTabVisible(0, False)
+    ui.tabWidget_DCDC.tabBar().setTabTextColor(1,QtCore.Qt.red)

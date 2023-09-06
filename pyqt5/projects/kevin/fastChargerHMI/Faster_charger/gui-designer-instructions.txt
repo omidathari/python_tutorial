@@ -1,0 +1,20 @@
+PyQt5
+install: 
+
+pip3 install PyQt5
+
+pip3 install pyqt5-tools
+
+To open the Qt Designer you must have qt5-tools installed and use the following command:
+
+qt5-tools designer
+
+Once the GUI is designed it is saved as a file with .ui extension.
+This file can be converted to a python program by using the pyuic5 tool.  for example:
+
+pyuic5 -x .\fc_hmi.ui -o fc_hmi.pyS
+
+Then the program can be executed by 
+
+python3 fc_hmi_main.py
+

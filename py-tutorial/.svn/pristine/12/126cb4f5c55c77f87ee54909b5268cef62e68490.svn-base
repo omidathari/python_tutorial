@@ -1,0 +1,57 @@
+import socket
+import threading
+import time
+
+class udpClientObject:
+    def __init__(self,ip_address, port_number, rx_callback) -> None:
+        self.rx_callback = rx_callback
+        self.ip_address = ip_address
+        self.port_number = port_number
+        self.buffersize = 2000
+        self.rx_thread = threading.Thread(target = self.__receiver)
+        self.tx_mutex = threading.Lock()
+        self.serverAddressPort = (ip_address, port_number)
+        # Create a UDP socket at client side
+        self.udpClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+
+    def start(self):
+        self.rx_thread.start()
+
+    def __receiver(self):
+        print("Start the UDP Client receiver thread")
+        time.sleep(1)
+        while True:
+            try:
+                msgFromServer = self.udpClientSocket.recvfrom(self.buffersize)
+                print(msgFromServer[1])
+                self.rx_callback(msgFromServer[0])
+                # print(msgFromServer[0])
+                # print(".")
+            except BaseException as e:
+                print("UDP Receiver Exception\r\n" , e)
+                time.sleep(3)
+
+    def send(self,data):
+        try:
+            if( True == self.tx_mutex.acquire() ):
+                print("UDP Client Send: ",data)
+                self.udpClientSocket.sendto(data, self.serverAddressPort)
+                self.tx_mutex.release()
+        except BaseException as e:
+            print("UDP TX Exception.")
+            print(e)
+
+
+def udp_client_receiver( data ):
+    print(data)
+
+udpc = udpClientObject("127.0.0.1", 20001,udp_client_receiver)
+
+udpc.start()
+
+num = 0
+while True:
+    time.sleep(1)
+    udpc.send( str.encode("Hello UDP Server" + str(num)))
+    num += 1
+    pass

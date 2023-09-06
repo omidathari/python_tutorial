@@ -1,0 +1,94 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+import fc_hmi
+import udp_client_class
+import threading
+import time
+import sys
+
+class uiMain( fc_hmi.Ui_MainWindow, QtWidgets.QMainWindow):
+    # For some strange reason this must be outside the __init__ function
+    someSignal = QtCore.pyqtSignal(str)
+
+    def __init__(self):
+        super(uiMain,self).__init__()
+        self.setupUi(self)
+        self.server_ip = "127.0.0.1"
+        self.server_port = 20001
+        self.gui_ip = "127.0.0.1"
+        self.gui_port = 20003
+        # self.tab.setStyleSheet("background-color: lightgrey;")
+        # self.set_tab1_background_color()
+        # self.pushButton.clicked.connect(self.toggle_color)
+        # self.bg = False
+        self.serverIx = udp_client_class.udpClientObject(self.server_ip, self.server_port, self.gui_ip, self.gui_port, self.__server_receiver)
+        self.app = None
+        self.my_signal_slots()
+        self.my_thread = threading.Thread(target = self.__my_thread_processor)
+        self.__start_server_connection()
+        self.show()
+
+    def my_signal_slots(self):
+        # create a signal equivalent to "void someSignal(int, QWidget)"
+        self.someSignal.connect(self.someSlot)
+        pass
+
+    @QtCore.pyqtSlot(str) 
+    def someSlot(self,sdata):
+        self.textEdit.setText(sdata)
+        print(sdata)
+        pass
+    
+    def mythread_start(self):
+        self.my_thread.start()
+        
+    def __my_thread_processor(self):
+        val = 0
+        while True:
+            val += 1
+            self.serverIx.send(str.encode("From Client " + str(val)))
+            time.sleep(1)
+
+    def __server_receiver(self, data):
+        #print(type(data))
+        self.someSignal.emit(data.decode())
+        #print( "RX from server: " + str(data) )
+
+    def __start_server_connection(self):
+        self.serverIx.start()
+
+    # def set_tab1_background_color(self):
+    #     #st = self.tab.palette().window().color()
+    #     # setStyleSheet("background-color: default;")
+    #     #print(st.name(0))
+    #     #self.tab.setAutoFillBackground(True)
+    #     self.tab.setStyleSheet("color: red;")
+    #     self.bg = True
+    #     # palette = self.tab.palette()
+    #     # prev_color = self.tab.styleSheet()
+    #     # palette.setColor(self.tab.backgroundRole(), QtCore.Qt.red)
+    #     # self.tab.setPalette(palette)
+
+    
+    # def toggle_color(self):
+    #     print(self.bg)
+    #     if( self.bg == True ):
+    #          print("Set False")
+    #          #self.tab.setAutoFillBackground(False)
+    #          self.tab.setStyleSheet("border-color: lightgray;")
+    #          self.bg = False
+    #     else:
+    #         print("Set True")
+    #         #self.tab.setAutoFillBackground(True)
+    #         self.tab.setStyleSheet("border-color: red;")
+    #         self.bg = True
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create('Plastique'))
+    qt_app = uiMain()
+    qt_app.mythread_start()
+    app.exec_()
+    print("Exit")
+    time.sleep(2)
